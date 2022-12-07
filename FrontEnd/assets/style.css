@@ -46,6 +46,10 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+button{
+	font-family: unset;
+	background: none;
+}
 /** end reset css**/
 body {
 	max-width: 1140px;
@@ -124,6 +128,28 @@ li:hover {
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 1em;
+}
+.filters{
+	display: flex;
+	justify-content: center;
+	column-gap: .8rem;
+	margin-bottom: 3rem;
+}
+.filter{
+	padding: .5rem 2rem;
+	border: 2px solid #1D6154;
+	color: #1D6154;
+	border-radius: 2rem;
+	font-weight: 700;
+	font-family: 'Syne';
+	cursor: pointer;
+}
+.filter:not(.selected):hover{
+	background-color: #1d615417;
+}
+.selected{
+	background-color: #1D6154;
+	color: white;
 }
 .gallery {
 	width: 100%;
