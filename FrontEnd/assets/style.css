@@ -50,6 +50,10 @@ button{
 	font-family: unset;
 	background: none;
 }
+a, a:visited{
+	text-decoration: none;
+	color: unset;
+}
 /** end reset css**/
 body {
 	max-width: 1140px;
@@ -90,13 +94,16 @@ h2{
 }
 nav ul {
 	display: flex;
-	align-items: center;
+	align-items: flex-start;
 	list-style-type: none;
 
 }
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
+}
+nav img{
+	width: 1.2rem;
 }
 
 li:hover {
@@ -163,31 +170,42 @@ li:hover {
 	width: 100%;
 
 }
-#contact {
+.active{
+	font-weight: bold;
+}
+#contact{
 	width: 50%;
-margin: auto;
+	margin: auto;
 }
-#contact > * {
+#login{
+	width: 50%;
+	margin: 150px auto 350px;
+}
+#contact, #login > * {
 	text-align: center;
-
 }
-#contact h2{
+#contact h2, #login h2{
 	margin-bottom: 20px;
 }
-#contact form {
+#contact form, #login form {
 	text-align: left;
 	margin-top:30px;
 	display: flex;
 	flex-direction: column;
 }
-
-#contact input {
+#login form a{
+	display: block;
+	margin: 0 auto; 
+	color: #3D3D3D;
+	border-bottom: 1px solid #3D3D3D;
+}
+#contact input, #login input {
 	height: 50px;
 	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
-#contact label {
+#contact label, #login label {
 	margin: 2em 0 1em 0;
 }
 #contact textarea {
