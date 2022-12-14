@@ -52,9 +52,11 @@ button{
 }
 a, a:visited{
 	text-decoration: none;
-	color: unset;
 }
 /** end reset css**/
+html{
+	background-color: #FFFEF8;
+}
 body {
 	max-width: 1140px;
 	margin:auto;
@@ -70,7 +72,7 @@ section {
 	margin: 50px 0
 }
 
-h1{
+h1 a{
 	display: flex;
 	flex-direction: column;
 	font-family: 'Syne';
@@ -79,7 +81,7 @@ h1{
 	color: #B1663C
 }
 
-h1 > span {
+h1 a > span {
 	font-family: 'Work Sans';
 	font-size:10px;
 	letter-spacing: 0.1em;
@@ -101,6 +103,12 @@ nav ul {
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
+}
+nav li a{
+	color: #000000;
+}
+nav li a:hover{
+	color: #B1663C;
 }
 nav img{
 	width: 1.2rem;
@@ -144,12 +152,14 @@ li:hover {
 }
 .filter{
 	padding: .5rem 2rem;
-	border: 2px solid #1D6154;
+	border: 1px solid #1D6154;
 	color: #1D6154;
 	border-radius: 2rem;
 	font-weight: 700;
 	font-family: 'Syne';
 	cursor: pointer;
+	font-size: 1rem;
+	transition: background-color .2s ease-in;
 }
 .filter:not(.selected):hover{
 	background-color: #1d615417;
@@ -174,7 +184,7 @@ li:hover {
 	font-weight: bold;
 }
 #contact{
-	width: 50%;
+	width: 40%;
 	margin: auto;
 }
 #login{
@@ -228,5 +238,14 @@ footer nav ul {
 	display: flex;
 	justify-content: flex-end;
 	margin: 2em
+}
+
+.error{
+	padding: 1rem;
+	margin: 0.5rem 0;
+	color: #ff0000;
+	background-color: #ffdfdf;
+	border-radius: 2rem;
+	text-align: center;
 }
 

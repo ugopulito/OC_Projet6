@@ -61,3 +61,5 @@ fetch('http://localhost:5678/api/works')
         figures = document.querySelectorAll('.gallery figure');
         filters.forEach(filter => {filter.addEventListener('click', filterProjects)});
     })
+
+console.log(document.location.pathname);
