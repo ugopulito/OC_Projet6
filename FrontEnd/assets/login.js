@@ -28,13 +28,16 @@ function login(e){
     .catch(function(err){
         console.error('Une erreur est survenue merci de réessayer');
         console.error(err);
-        createError();
+        if(!document.querySelector('.error')){
+            createError();
+        }
     })
 }
 
 document.querySelector('#submit-login').addEventListener('submit', login)
 
 function createError(){
+
     let error = document.createElement('div');
     error.classList.add('error');
     error.innerText = 'Erreur de connexion, merci de réessayer';
