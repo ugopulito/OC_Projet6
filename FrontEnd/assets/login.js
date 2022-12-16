@@ -1,3 +1,4 @@
+//Fonction de login 
 
 function login(e){
     e.preventDefault();
@@ -7,6 +8,7 @@ function login(e){
         "email" : username.value,
         "password" : password.value
     }
+    removeError();
     /* console.log('Connexion avec le user :'+JSON.stringify(user)); */
     fetch('http://localhost:5678/api/users/login', {
         method: 'POST', 
@@ -20,26 +22,35 @@ function login(e){
         if(response.ok){
         return response.json();
         }
+        else if(response.status >= 400 && response.status < 500) {
+        throw userError = new Error('Erreur d\'identifiant ou de mot de passe. Merci de réessayer');
+        }
+        else{
+        throw serverError = new Error('Il semble y avoir une erreur de notre côté. Merci de réessayer ultérieurement')
+        }
     })
     .then(function(data){
         document.cookie = 'token='+data.token;
         window.location.assign('index.html')
     })
     .catch(function(err){
-        console.error('Une erreur est survenue merci de réessayer');
-        console.error(err);
-        if(!document.querySelector('.error')){
-            createError();
-        }
+        console.error(err.message);
+        createError(err);
     })
 }
 
-document.querySelector('#submit-login').addEventListener('submit', login)
-
-function createError(){
-
+function createError(e){
     let error = document.createElement('div');
     error.classList.add('error');
-    error.innerText = 'Erreur de connexion, merci de réessayer';
+    error.innerText = e.message;
     document.querySelector('#password').insertAdjacentElement('afterend', error);
 }
+
+function removeError(){
+    if(document.querySelector('.error')){
+        document.querySelector('.error').remove();
+    }
+}
+    
+    document.querySelector('#submit-login').addEventListener('submit', login)
+    document.querySelector('#submit-login').addEventListener('input', removeError)
