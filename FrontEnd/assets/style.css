@@ -103,6 +103,7 @@ nav ul {
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
+	cursor: pointer;
 }
 nav li a{
 	color: #000000;
@@ -131,7 +132,8 @@ li:hover {
 }
 
 #introduction article {
-	flex: 1
+	flex: 1;
+	position:relative
 }
 #introduction h2 {
 	margin-bottom: 1em;
@@ -232,6 +234,10 @@ input[type="submit"]{
 	width: 180px;
 	text-align: center;
 	border-radius: 60px ;
+	cursor: pointer;
+}
+input[type="submit"]:hover{
+	background-color: #27806f;
 }
 
 footer nav ul {
@@ -248,4 +254,44 @@ footer nav ul {
 	border-radius: 2rem;
 	text-align: center;
 }
-
+/* Edit Mode */
+.topbar{
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	column-gap: .5rem;
+	padding: .5rem 0;
+	background-color: black;
+	color: white;
+	font-family: 'Syne';
+}
+.topbar button{
+	background-color: white;
+	border-radius: 2rem;
+	padding: .5rem 1rem;
+	cursor: pointer;
+}
+.topbar button:hover{
+	background-color: lightgray;
+}
+.topbar p{
+	display: flex;
+}
+.edit-icon{
+	margin: 0 .5rem;
+	content: url(./icons/edit-icon.svg);
+	fill: white;
+}
+button.edit {
+    border: none;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    position: absolute;
+    top: -2.5rem;
+}
+button.edit i{
+	fill: #000000;
+	margin-left: 0;
+}
