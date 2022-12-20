@@ -39,6 +39,22 @@ function displayEditBtns(){
     initEditBtn(worksEditBtn, 'works-edit');
     document.querySelector('#portfolio h2').insertAdjacentElement('afterend', worksEditBtn);
 }
+function getMiniatures(){
+    fetch('http://localhost:5678/api/works')
+    .then((Response) => {
+        return Response.json();
+    })
+    .then((data) => {
+        //Création des miniatures
+        for (let item of data){
+            const miniature = document.createElement('img');
+            document.querySelector('.miniatures').appendChild(miniature);
+            miniature.dataset.category = item.category.name;
+            miniature.setAttribute('src', item.imageUrl);
+            miniature.setAttribute('crossorigin', 'anonymous');
+            miniature.setAttribute('alt', item.title);
+        }})
+}
 function initModale(){
     //fenêtre de la modale et background
     const modale = document.createElement('div');
@@ -58,6 +74,17 @@ function initModale(){
     title.className = 'title';
     title.textContent = 'Galerie photo';
     content.appendChild(title);
+        //miniatures des projets
+    const miniatures = document.createElement('div');
+    content.appendChild(miniatures);
+    miniatures.className = 'miniatures';
+    getMiniatures();
+        //bouton d'ajout de travaux
+    const addWorkBtn = document.createElement('button'); 
+    addWorkBtn.classList.add('btn', 'add-work-btn');
+    addWorkBtn.textContent = 'Ajouter une photo';
+    content.appendChild(addWorkBtn);
+
 }
 if(getCookie('token')){
     console.log('Utilisateur connecté');
