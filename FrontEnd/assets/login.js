@@ -23,7 +23,7 @@ function login(e){
         return response.json();
         }
         else if(response.status >= 400 && response.status < 500) {
-        throw userError = new Error('Erreur d\'identifiant ou de mot de passe. Merci de réessayer');
+        throw userError = new Error('Erreur dans l\'identifiant ou le mot de passe');
         }
         else{
         throw serverError = new Error('Il semble y avoir une erreur de notre côté. Merci de réessayer ultérieurement')
