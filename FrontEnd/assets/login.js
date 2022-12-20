@@ -2,9 +2,9 @@
 
 function login(e){
     e.preventDefault();
-    let username = document.getElementById('email');
-    let password = document.getElementById('password');
-    let user = {
+    const username = document.getElementById('email');
+    const password = document.getElementById('password');
+    const user = {
         "email" : username.value,
         "password" : password.value
     }
@@ -34,13 +34,16 @@ function login(e){
         window.location.assign('index.html')
     })
     .catch(function(err){
+        if(err.message == 'Failed to fetch'){
+            err.message = 'Erreur de connexion au serveur'
+        }
         console.error(err.message);
         createError(err);
     })
 }
 
 function createError(e){
-    let error = document.createElement('div');
+    const error = document.createElement('div');
     error.classList.add('error');
     error.innerText = e.message;
     document.querySelector('#password').insertAdjacentElement('afterend', error);
