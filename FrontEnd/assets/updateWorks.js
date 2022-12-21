@@ -47,14 +47,32 @@ function getMiniatures(){
     .then((data) => {
         //Création des miniatures
         for (let item of data){
-            const miniature = document.createElement('img');
+            const miniature = document.createElement('div');
+            miniature.dataset.id = item.id;
+            miniature.className = 'miniature';
             document.querySelector('.miniatures').appendChild(miniature);
-            miniature.dataset.category = item.category.name;
-            miniature.setAttribute('src', item.imageUrl);
-            miniature.setAttribute('crossorigin', 'anonymous');
-            miniature.setAttribute('alt', item.title);
-        }})
+            //Vignettes
+            const miniatureImage = document.createElement('img');
+            miniatureImage.setAttribute('src', item.imageUrl);
+            miniatureImage.setAttribute('crossorigin', 'anonymous');
+            miniatureImage.setAttribute('alt', item.title);
+            miniature.appendChild(miniatureImage);
+            //Corbeille
+            const bin = document.createElement('div');
+            bin.className = 'delete-icon';
+            miniature.appendChild(bin);
+        }
+        deleteWork();
+    })
 }
+function deleteWork() {
+    const bins = document.querySelectorAll('.delete-icon');
+    bins.forEach(bin => {bin.addEventListener('click', function(){
+        console.log(bin.parentNode.getAttribute('data-id'));
+        bin.parentNode.style.display = 'none'
+    })});
+}
+
 function initModale(){
     //fenêtre de la modale et background
     const modale = document.createElement('div');
@@ -74,17 +92,26 @@ function initModale(){
     title.className = 'title';
     title.textContent = 'Galerie photo';
     content.appendChild(title);
-        //miniatures des projets
+        //Miniatures des projets
     const miniatures = document.createElement('div');
-    content.appendChild(miniatures);
     miniatures.className = 'miniatures';
+    content.appendChild(miniatures);
     getMiniatures();
-        //bouton d'ajout de travaux
+        //Ligne de séparation
+    const breakline = document.createElement('div');
+    breakline.className = 'breakline';
+    content.appendChild(breakline);
+        //Bouton d'ajout de travaux
     const addWorkBtn = document.createElement('button'); 
     addWorkBtn.classList.add('btn', 'add-work-btn');
+    addWorkBtn.id = 'add-work-btn';
     addWorkBtn.textContent = 'Ajouter une photo';
     content.appendChild(addWorkBtn);
-
+        //Bouton de suppression de la galerie
+    const deleteGallery = document.createElement('button');
+    deleteGallery.className = 'delete-gallery-btn';
+    deleteGallery.textContent = 'Supprimer la galerie';
+    content.appendChild(deleteGallery);
 }
 if(getCookie('token')){
     console.log('Utilisateur connecté');

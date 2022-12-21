@@ -40,6 +40,7 @@ fetch('http://localhost:5678/api/works')
             figure.appendChild(image);
             figure.appendChild(caption);
             figure.dataset.category = item.category.name;
+            figure.dataset.id = item.id;
             caption.innerText = item.title;
             image.setAttribute('src', item.imageUrl);
             image.setAttribute('crossorigin', 'anonymous');
