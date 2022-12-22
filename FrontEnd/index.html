@@ -9,15 +9,35 @@
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
+	<link rel="stylesheet" href="./assets/addons.css">
 </head>
 <body>
+	<div class="topbar" style="display: none;">
+		<p>
+			<svg class="edit-icon">
+				<use href="./assets/icons/edit-icon.svg#edit-icon-white"></use>
+			</svg>
+			Mode édition
+		</p>
+		<button>publier les changements</button>
+	</div>
+	<div class="modale" id="modale" style="display: none;">
+		<div class="content">
+			<i class="close-icon"></i>
+			<p class="title">Galerie photo</p>
+			<div class="miniatures"></div>
+			<div class="breakline"></div>
+			<button class="btn add-work-btn" id="add-work-btn">Ajouter une photo</button>
+			<button class="delete-gallery-btn">Supprimer la galerie</button>
+		</div>
+	</div>
 	<header>
 		<h1><a href="index.html">Sophie Bluel <span>Architecte d'inteérieur</span></a></h1>
 		<nav>
 			<ul>
 				<li><a href="index.html#portfolio">projets</a></li>
 				<li><a href="index.html#contact">contact</a></li>
-				<li><a href="./login.html">login</a></li>
+				<li id="login-out"><a href="./login.html">login</a></li>
 				<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 			</ul>
 		</nav>
@@ -61,7 +81,7 @@
 		</ul>
 	</nav>
 </footer>
-<script src="./assets/getWorks.js"></script>
-<script src="./assets/updateWorks.js"></script>
+<script type="module" src="./assets/getWorks.js"></script>
+<script type="module" src="./assets/updateWorks.js"></script>
 </body>
 </html>

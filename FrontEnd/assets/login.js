@@ -31,7 +31,7 @@ function login(e){
     })
     .then(function(data){
         document.cookie = 'token='+data.token;
-        window.location.assign('index.html')
+        window.location.replace('index.html')
     })
     .catch(function(err){
         if(err.message == 'Failed to fetch'){
