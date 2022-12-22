@@ -1,7 +1,7 @@
-let gallery, filters, filtersList, categories, figure, figures, image, caption, activeFilter, button;
-gallery = document.querySelector('.gallery');
-filtersList = document.querySelector('.filters');
-categories = new Set();
+let filters, figure, figures, image, caption, activeFilter, button;
+const gallery = document.querySelector('.gallery');
+const filtersList = document.querySelector('.filters');
+const categories = new Set();
 
 function initFilters(text){
     button = document.createElement('button');
