@@ -9,8 +9,13 @@ function displayTopBar(){
 function deleteWork() {
     const bins = document.querySelectorAll('.delete-icon');
     bins.forEach(bin => {bin.addEventListener('click', function(){
-        console.log(bin.parentNode.getAttribute('data-id'));
-        bin.parentNode.style.display = 'none'
+        const IdWorkToDelete = bin.parentNode.getAttribute('data-id');
+        fetch('http://localhost:5678/api/works/' + IdWorkToDelete, {
+        method: 'DELETE',
+        headers: {
+            'Authorization' : 'Bearer ' + extFunction.getCookie('token')
+        }
+        })
     })});
 }
 function getMiniatures(){
