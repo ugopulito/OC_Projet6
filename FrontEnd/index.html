@@ -24,23 +24,31 @@
 	<div class="modale" id="modale" style="display: none;">
 		<div class="content">
 			<i class="close-icon"></i>
-			<p class="title">Galerie photo</p>
-			<div class="miniatures"></div>
-			<div class="breakline"></div>
-			<button class="btn add-work-btn" id="add-work-btn">Ajouter une photo</button>
-			<button class="delete-gallery-btn">Supprimer la galerie</button>
-			<p class="title">Ajout photo</p>
-			<form id="submit-work">
-				<label for="new-work-image">+ Ajouter photo</label>
-				<input type="file" name="new-work-image" id="new-work-image" accept="image/png, image/jpeg" required>
-				<label for="new-work-title">Titre</label>
-				<input type="text" name="new-work-title" id="new-work-title" required>
-				<label for="new-work-category">Catégorie</label>
-				<select id="new-work-category">
-				</select>
-			</form>
+			<div class="delete-work">
+				<p class="title">Galerie photo</p>
+				<div class="miniatures"></div>
 				<div class="breakline"></div>
-				<button class="btn add-work-btn" id="add-work-btn">Valider</button>
+				<button class="btn add-work-btn" id="add-work-btn">Ajouter une photo</button>
+				<button class="delete-gallery-btn">Supprimer la galerie</button>
+			</div>
+			<div class="add-work" style="display: none;">
+				<p class="title">Ajout photo</p>
+				<form id="submit-work">
+					<div class="new-image">
+						<i class="image-icon"></i>
+						<label for="new-work-image">+ Ajouter photo</label>
+						<p>jpg, png : 4mo max</p>
+					</div>
+					<input type="file" name="new-work-image" id="new-work-image" accept="image/png, image/jpeg" required>
+					<label for="new-work-title">Titre</label>
+					<input type="text" name="new-work-title" id="new-work-title" required>
+					<label for="new-work-category">Catégorie</label>
+					<select id="new-work-category">
+					</select>
+				</form>
+				<div class="breakline"></div>
+				<button class="btn add-work-btn" id="submit-work-btn">Valider</button>
+			</div>
 		</div>
 	</div>
 	<header>

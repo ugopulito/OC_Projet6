@@ -100,6 +100,13 @@ input[type="submit"]:active, .btn:active{
 	right: 2rem;
 	cursor: pointer;
 }
+.delete-work, .add-work{
+	text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 70%;
+}
 .content .title{
 	text-align: center;
 	margin-top: 3rem;
@@ -107,7 +114,6 @@ input[type="submit"]:active, .btn:active{
 	font-size: 2rem;
 }
 .miniatures{
-	width: 70%;
     margin: 3rem 0;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
@@ -137,7 +143,7 @@ input[type="submit"]:active, .btn:active{
 	background-color: rgba(0, 0, 0, 0.74);
 }
 .breakline{
-	width: 70%;
+	width: 100%;
 	border-bottom: 1px solid hsla(0, 0%, 70%, 1);
 }
 .add-work-btn{
@@ -153,19 +159,15 @@ input[type="submit"]:active, .btn:active{
 	margin-bottom: 3rem;
 }
 .modale form{
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
 	margin: 3rem 0;
+	text-align: left;
 }
 .modale form input[type="file"] {
     display: none;
 }
 .modale form input, .modale form label, .modale form select{
-	width: 70%;
 	box-sizing: border-box;
+	width: 100%;
 }
 .modale form input, .modale form select{
 	margin-bottom: 2rem;
@@ -182,8 +184,22 @@ input[type="submit"]:active, .btn:active{
 }
 .modale form label{
 	margin-bottom: .5rem;
-	text-align: left;
 	font-weight: bolder;
+}
+.new-image {
+	width: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #E8F1F6;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0;
+    margin-bottom: 2rem;
+    border-radius: 3px;
+}
+i.image-icon{
+	content: url(./icons/image-icon.svg);
+	margin-bottom: 2rem;
 }
 .modale form label[for="new-work-image"]:hover{
 	background-color: hsl(201, 20%, 73%);

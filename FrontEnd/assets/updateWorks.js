@@ -79,6 +79,10 @@ if(extFunction.getCookie('token')){
     document.querySelector('.close-icon').addEventListener('click', function(){
         document.querySelector('#modale').style.display = 'none';
     })
+    document.querySelector('#add-work-btn').addEventListener('click', function(){
+        document.querySelector('.delete-work').style.display = 'none';
+        document.querySelector('.add-work').removeAttribute('style');
+    })
     document.querySelector('.content').addEventListener('click', function(event){
         event.stopPropagation();
     })
