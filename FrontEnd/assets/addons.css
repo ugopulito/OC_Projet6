@@ -1,4 +1,11 @@
-/* Error Handling */
+/* Ajouts CSS de base */
+input[type="submit"]:hover, .btn:hover{
+	background-color: #27806f;
+}
+input[type="submit"]:active, .btn:active{
+	background-color: #1D6154;
+}
+/* Gestion des erreurs */
 .error{
 	padding: 1rem;
 	margin: 0.5rem 0;
@@ -7,7 +14,7 @@
 	border-radius: 2rem;
 	text-align: center;
 }
-/* Edit Mode */
+/* Mode édition */
 .header-edit-mode{
     margin-top: 100px;
 }
@@ -125,6 +132,9 @@
 	cursor: pointer;
 	content: url(./icons/delete-icon.svg);
 }
+.delete-icon:hover{
+	background-color: rgba(0, 0, 0, 0.74);
+}
 .breakline{
 	width: 70%;
 	margin: 0 auto;
@@ -134,6 +144,7 @@
 	font-size: 1rem;
 	padding: .7rem 3rem;
 	width: fit-content;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 .delete-gallery-btn{
 	font-family: 'Work Sans';

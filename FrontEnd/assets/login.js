@@ -18,7 +18,7 @@ function login(e){
         },
         body: JSON.stringify(user)
     })
-    .then(function(response){
+    .then((response) => {
         if(response.ok){
         return response.json();
         }
@@ -29,11 +29,11 @@ function login(e){
         throw serverError = new Error('Il semble y avoir une erreur de notre côté. Merci de réessayer ultérieurement')
         }
     })
-    .then(function(data){
+    .then((data) => {
         document.cookie = 'token='+data.token;
         window.location.replace('index.html')
     })
-    .catch(function(err){
+    .catch((err) => {
         if(err.message == 'Failed to fetch'){
             err.message = 'Erreur de connexion au serveur'
         }

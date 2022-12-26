@@ -244,9 +244,7 @@ input[type="submit"], .btn{
 	border-radius: 60px ;
 	cursor: pointer;
 }
-input[type="submit"]:hover{
-	background-color: #27806f;
-}
+
 
 footer nav ul {
 	display: flex;

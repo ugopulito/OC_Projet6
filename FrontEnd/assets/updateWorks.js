@@ -7,15 +7,17 @@ function displayTopBar(){
 }
 
 function deleteWork() {
-    const bins = document.querySelectorAll('.delete-icon');
-    bins.forEach(bin => {bin.addEventListener('click', function(){
-        const IdWorkToDelete = bin.parentNode.getAttribute('data-id');
-        fetch('http://localhost:5678/api/works/' + IdWorkToDelete, {
-        method: 'DELETE',
-        headers: {
-            'Authorization' : 'Bearer ' + extFunction.getCookie('token')
-        }
-        })
+    document.querySelectorAll('.delete-icon').forEach(bin => {bin.addEventListener('click', function(){
+        const idWorkToDelete = bin.parentNode.getAttribute('data-id');
+        if(confirm('Voulez-vous supprimer ce projet ?')){
+            /* console.log(idWorkToDelete); */
+            fetch('http://localhost:5678/api/works/' + idWorkToDelete, {
+            method: 'DELETE',
+            headers: {
+                'Authorization' : 'Bearer ' + extFunction.getCookie('token')
+            }
+            })
+        };
     })});
 }
 function getMiniatures(){
