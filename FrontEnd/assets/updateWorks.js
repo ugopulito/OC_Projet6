@@ -17,10 +17,17 @@ function deleteWork() {
                 'Authorization' : 'Bearer ' + extFunction.getCookie('token')
             }
             })
+            .then((Response) => {
+                if(Response.ok){
+                    bin.parentNode.style.display = 'none';
+                    document.querySelector('.gallery [data-id="'+idWorkToDelete+'"]').style.display = 'none';
+                }
+            })
         };
     })});
 }
-function getMiniatures(){
+function initModale(){
+    let catList = new Set();
     fetch('http://localhost:5678/api/works')
     .then((Response) => {
         return Response.json();
@@ -42,6 +49,14 @@ function getMiniatures(){
             const bin = document.createElement('div');
             bin.className = 'delete-icon';
             miniature.appendChild(bin);
+            //Ajout liste catégories
+            catList.add(item.category.name);
+        }
+        for (let e of catList){
+            const option = document.createElement('option');
+            option.setAttribute('value', e);
+            option.innerText = e;
+            document.querySelector('#new-work-category').appendChild(option)
         }
         deleteWork();
     })
@@ -54,7 +69,7 @@ if(extFunction.getCookie('token')){
     extFunction.displayLogout();
     extFunction.displayEditBtns();
     displayTopBar();
-    getMiniatures();
+    initModale();
     document.querySelector('#works-edit').addEventListener('click', function(){
         document.querySelector('#modale').removeAttribute('style');
     })
