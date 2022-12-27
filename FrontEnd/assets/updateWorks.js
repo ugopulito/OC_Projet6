@@ -1,4 +1,7 @@
 import * as extFunction from './functions.js';
+const newWorkImage = document.getElementById('new-work-image');
+const newWorkTitle = document.getElementById('new-work-title');
+const newWorkCategory = document.getElementById('new-work-category');
 
 function deleteWork() {
     document.querySelectorAll('.delete-icon').forEach(bin => {bin.addEventListener('click', function(){
@@ -22,20 +25,28 @@ function deleteWork() {
 }
 
 function addWork(){
-    document.getElementById('new-work-image').addEventListener('change', function(){
-        const prevImage = document.getElementById('new-work-image').files;
-        if (prevImage[0]){
-        document.querySelector('#new-work-image-preview').src = URL.createObjectURL(prevImage[0]);
+    //Validation du formulaire
+    document.getElementById('submit-work').addEventListener('input', function(){
+        if((newWorkImage.value != '') && (newWorkCategory.value != '') && (newWorkTitle.value != '')/* Impossible de valider directement le champ avec la l'attribut "required" du html ? */){
+            document.getElementById('submit-work-btn').removeAttribute('disabled')
+        }
+        else{
+            document.getElementById('submit-work-btn').setAttribute('disabled', '')
+        }
+    })
+    //Preview de l'image téléchargée
+    newWorkImage.addEventListener('change', function(){
+        const imagePreview = newWorkImage.files;
+        if (imagePreview[0]){
+        document.querySelector('#new-work-image-preview').src = URL.createObjectURL(imagePreview[0]);
         document.querySelector('#new-work-image-preview').style.display= 'block';
         document.querySelectorAll('.new-image :not(img)').forEach(item => {
             item.style.display = 'none';
         })
         }
     })
+    //Soumission du formulaire
     document.querySelector('#submit-work-btn').addEventListener('click', function(){
-        const newWorkImage = document.getElementById('new-work-image');
-        const newWorkTitle = document.getElementById('new-work-title');
-        const newWorkCategory = document.getElementById('new-work-category');
         const newWork = {
             "title": newWorkTitle.value,
             "imageUrl": URL.createObjectURL(newWorkImage.files[0]),
@@ -47,9 +58,10 @@ function addWork(){
 }
 
 function emptyModal(){
-    document.getElementById('new-work-title').value = '';
-    document.getElementById('new-work-image').value = '';
-    document.getElementById('new-work-image-preview').src = '#';
+    newWorkTitle.value = '';
+    newWorkImage.value = '';
+    newWorkCategory.value = '';
+    document.querySelector('#new-work-image-preview').src = '#';
     document.querySelector('#new-work-image-preview').style.display= 'none';
     document.querySelectorAll('.new-image :not(img)').forEach(item => {
         item.removeAttribute('style');

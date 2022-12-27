@@ -152,8 +152,8 @@ li:hover {
 }
 #portfolio h2 {
 	text-align: center;
-	width: fit-content;
-	margin: 0 auto 1em;
+    width: fit-content;
+    margin-bottom: 1em;
 }
 .filters{
 	display: flex;
@@ -188,7 +188,8 @@ li:hover {
 
 .gallery img {
 	width: 100%;
-
+    aspect-ratio: 309/414;
+    object-fit: cover;
 }
 .active{
 	font-weight: bold;

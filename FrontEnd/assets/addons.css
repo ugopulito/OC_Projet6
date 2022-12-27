@@ -98,9 +98,13 @@ input[type="submit"]:active, .btn:active{
 	margin-top: .5rem;
 }
 .works-edit {
-    top: 0;
-    line-height: 2rem;
-    right: 30%;
+    position: relative;
+}
+.section-title {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: baseline;
 }
 /* Modale */
 .modale {
