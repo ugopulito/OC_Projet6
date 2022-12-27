@@ -1,11 +1,5 @@
 import * as extFunction from './functions.js';
 
-
-function displayTopBar(){
-    document.querySelector('.topbar').removeAttribute('style');
-    document.querySelector('header').classList.add('header-edit-mode')
-}
-
 function deleteWork() {
     document.querySelectorAll('.delete-icon').forEach(bin => {bin.addEventListener('click', function(){
         const idWorkToDelete = bin.parentNode.getAttribute('data-id');
@@ -26,7 +20,43 @@ function deleteWork() {
         };
     })});
 }
-function initModale(){
+
+function addWork(){
+    document.getElementById('new-work-image').addEventListener('change', function(){
+        const prevImage = document.getElementById('new-work-image').files;
+        if (prevImage[0]){
+        document.querySelector('#new-work-image-preview').src = URL.createObjectURL(prevImage[0]);
+        document.querySelector('#new-work-image-preview').style.display= 'block';
+        document.querySelectorAll('.new-image :not(img)').forEach(item => {
+            item.style.display = 'none';
+        })
+        }
+    })
+    document.querySelector('#submit-work-btn').addEventListener('click', function(){
+        const newWorkImage = document.getElementById('new-work-image');
+        const newWorkTitle = document.getElementById('new-work-title');
+        const newWorkCategory = document.getElementById('new-work-category');
+        const newWork = {
+            "title": newWorkTitle.value,
+            "imageUrl": URL.createObjectURL(newWorkImage.files[0]),
+            "categoryId": newWorkCategory.value,
+        }
+        console.log(JSON.stringify(newWork));
+        emptyModal();
+    })
+}
+
+function emptyModal(){
+    document.getElementById('new-work-title').value = '';
+    document.getElementById('new-work-image').value = '';
+    document.getElementById('new-work-image-preview').src = '#';
+    document.querySelector('#new-work-image-preview').style.display= 'none';
+    document.querySelectorAll('.new-image :not(img)').forEach(item => {
+        item.removeAttribute('style');
+    })
+}
+
+function initialisationModale(){
     let catList = new Set();
     fetch('http://localhost:5678/api/works')
     .then((Response) => {
@@ -68,8 +98,9 @@ if(extFunction.getCookie('token')){
     document.querySelector('.filters').remove();
     extFunction.displayLogout();
     extFunction.displayEditBtns();
-    displayTopBar();
-    initModale();
+    extFunction.displayTopBar();
+    initialisationModale();
+    //Ouverture & Fermeture de la modale
     document.querySelector('#works-edit').addEventListener('click', function(){
         document.querySelector('#modale').removeAttribute('style');
     })
@@ -78,12 +109,20 @@ if(extFunction.getCookie('token')){
     })
     document.querySelector('.close-icon').addEventListener('click', function(){
         document.querySelector('#modale').style.display = 'none';
-    })
-    document.querySelector('#add-work-btn').addEventListener('click', function(){
-        document.querySelector('.delete-work').style.display = 'none';
-        document.querySelector('.add-work').removeAttribute('style');
+        emptyModal();
     })
     document.querySelector('.content').addEventListener('click', function(event){
         event.stopPropagation();
     })
+    //Navigation dans la modale
+    document.querySelector('#add-image-btn').addEventListener('click', function(){
+        document.querySelector('.delete-work').style.display = 'none';
+        document.querySelector('.add-work').removeAttribute('style');
+        location.href = '#add-work';
+    })
+    document.querySelector('.arrow-icon').addEventListener('click', function(){
+        document.querySelector('.add-work').style.display = 'none';
+        document.querySelector('.delete-work').removeAttribute('style');
+    })
+    addWork();
 }

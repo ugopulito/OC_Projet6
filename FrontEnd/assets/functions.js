@@ -1,3 +1,8 @@
+function displayTopBar(){
+    document.querySelector('.topbar').removeAttribute('style');
+    document.querySelector('header').classList.add('header-edit-mode')
+}
+
 function displayLogout(){
     document.querySelector('#login-out').textContent = 'logout';
     document.querySelector('#login-out').addEventListener('click', function logout(){
@@ -29,4 +34,4 @@ function displayEditBtns(){
     document.querySelector('#portfolio h2').insertAdjacentElement('afterend', worksEditBtn);
 }
 
-export {displayLogout, getCookie, displayEditBtns};
+export {displayTopBar, displayLogout, getCookie, displayEditBtns};
