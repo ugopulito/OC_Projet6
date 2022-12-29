@@ -1,24 +1,36 @@
-import * as extFunction from './functions.js';
+import {getCookie, displayEditBtns, displayLogout, displayTopBar, createError, removeError} from './functions.js';
+
 const newWorkImage = document.getElementById('new-work-image');
 const newWorkTitle = document.getElementById('new-work-title');
 const newWorkCategory = document.getElementById('new-work-category');
 
+
+
 function deleteWork() {
     document.querySelectorAll('.delete-icon').forEach(bin => {bin.addEventListener('click', function(){
         const idWorkToDelete = bin.parentNode.getAttribute('data-id');
+        removeError('.delete-work .error');
         if(confirm('Voulez-vous supprimer ce projet ?')){
-            /* console.log(idWorkToDelete); */
+            //Masquage du projet supprimé pour UX en attente de la réponse du server
+            bin.parentNode.style.display = 'none';
+            document.querySelector('.gallery [data-id="'+idWorkToDelete+'"]').style.display = 'none';
             fetch('http://localhost:5678/api/works/' + idWorkToDelete, {
             method: 'DELETE',
             headers: {
-                'Authorization' : 'Bearer ' + extFunction.getCookie('token')
+                'Authorization' : 'Bearer ' + getCookie('token')
             }
             })
             .then((Response) => {
                 if(Response.ok){
-                    bin.parentNode.style.display = 'none';
-                    document.querySelector('.gallery [data-id="'+idWorkToDelete+'"]').style.display = 'none';
+                    bin.parentNode.remove();
+                    document.querySelector('.gallery [data-id="'+idWorkToDelete+'"]').remove();
                 }
+            })
+            .catch((error) => {
+                bin.parentNode.removeAttribute('style');
+                    document.querySelector('.gallery [data-id="'+idWorkToDelete+'"]').removeAttribute('style');
+                    console.log(error);
+                    createError(error.message, '.delete-work', 'beforeEnd');
             })
         };
     })});
@@ -26,16 +38,17 @@ function deleteWork() {
 
 function addWork(){
     //Validation du formulaire
-    document.getElementById('submit-work').addEventListener('input', function(){
-        if((newWorkImage.value != '') && (newWorkCategory.value != '') && (newWorkTitle.value != '')/* Impossible de valider directement le champ avec la l'attribut "required" du html ? */){
+    /* document.getElementById('submit-work').addEventListener('input', function(){
+        if((newWorkImage.value != '') && (newWorkCategory.value != '') && (newWorkTitle.value != '')){
             document.getElementById('submit-work-btn').removeAttribute('disabled')
         }
         else{
             document.getElementById('submit-work-btn').setAttribute('disabled', '')
         }
-    })
+    }) */
     //Preview de l'image téléchargée
     newWorkImage.addEventListener('change', function(){
+        removeError('#submit-work .error');
         const imagePreview = newWorkImage.files;
         if (imagePreview[0]){
         document.querySelector('#new-work-image-preview').src = URL.createObjectURL(imagePreview[0]);
@@ -47,13 +60,18 @@ function addWork(){
     })
     //Soumission du formulaire
     document.querySelector('#submit-work-btn').addEventListener('click', function(){
-        const newWork = {
+        if(newWorkImage.value != '')
+        {const newWork = {
             "title": newWorkTitle.value,
             "imageUrl": URL.createObjectURL(newWorkImage.files[0]),
             "categoryId": newWorkCategory.value,
         }
         console.log(JSON.stringify(newWork));
-        emptyModal();
+        emptyModal();}
+        else{
+            removeError('#submit-work .error');
+            createError('Vous devez ajouter une image', 'div.new-image', 'beforeEnd')
+        }
     })
 }
 
@@ -92,8 +110,9 @@ function initialisationModale(){
             bin.className = 'delete-icon';
             miniature.appendChild(bin);
             //Ajout liste catégories
-            catList.add(item.category.name);
+            catList.add(item.category.id);
         }
+        console.log(catList);
         for (let e of catList){
             const option = document.createElement('option');
             option.setAttribute('value', e);
@@ -105,12 +124,12 @@ function initialisationModale(){
 }
 
 
-if(extFunction.getCookie('token')){
+if(getCookie('token')){
     console.log('Utilisateur connecté');
     document.querySelector('.filters').remove();
-    extFunction.displayLogout();
-    extFunction.displayEditBtns();
-    extFunction.displayTopBar();
+    displayLogout();
+    displayEditBtns();
+    displayTopBar();
     initialisationModale();
     //Ouverture & Fermeture de la modale
     document.querySelector('#works-edit').addEventListener('click', function(){

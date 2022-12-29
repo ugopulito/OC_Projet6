@@ -34,4 +34,17 @@ function displayEditBtns(){
     document.querySelector('#portfolio h2').insertAdjacentElement('afterend', worksEditBtn);
 }
 
-export {displayTopBar, displayLogout, getCookie, displayEditBtns};
+function createError(message, target, anchor){
+    const error = document.createElement('div');
+    error.classList.add('error');
+    error.innerText = message
+    document.querySelector(target).insertAdjacentElement(anchor, error);
+}
+
+function removeError(target){
+    if(document.querySelector(target)){
+        document.querySelector(target).remove();
+    }
+}
+
+export {displayTopBar, displayLogout, getCookie, displayEditBtns, removeError, createError};

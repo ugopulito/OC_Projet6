@@ -123,14 +123,15 @@ input[type="submit"]:active, .btn:active{
     overflow-y: auto;
     background: white;
     width: 35%;
-    height: 80vh;
+    height: fit-content;
+    max-height: 80vh;
     position: absolute;
     border-radius: 1rem;
     top: 4rem;
     text-align: center;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .delete-work, .add-work{

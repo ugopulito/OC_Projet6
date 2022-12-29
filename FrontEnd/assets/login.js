@@ -1,4 +1,5 @@
 //Fonction de login 
+import {createError, removeError} from './functions.js';
 
 function login(e){
     e.preventDefault();
@@ -8,7 +9,7 @@ function login(e){
         "email" : username.value,
         "password" : password.value
     }
-    removeError();
+    removeError('#submit-login .error');
     /* console.log('Connexion avec le user :'+JSON.stringify(user)); */
     fetch('http://localhost:5678/api/users/login', {
         method: 'POST', 
@@ -38,22 +39,9 @@ function login(e){
             err.message = 'Erreur de connexion au serveur'
         }
         console.error(err.message);
-        createError(err);
+        createError(err, '#password', 'afterEnd');
     })
-}
-
-function createError(e){
-    const error = document.createElement('div');
-    error.classList.add('error');
-    error.innerText = e.message;
-    document.querySelector('#password').insertAdjacentElement('afterend', error);
-}
-
-function removeError(){
-    if(document.querySelector('.error')){
-        document.querySelector('.error').remove();
-    }
 }
     
     document.querySelector('#submit-login').addEventListener('submit', login)
-    document.querySelector('#submit-login').addEventListener('input', removeError)
+    document.querySelector('#submit-login').addEventListener('input', function(){removeError('#submit-login .error')})
