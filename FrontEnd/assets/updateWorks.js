@@ -56,21 +56,32 @@ function addWork(){
         const newWorkFormData = new FormData();
         newWorkFormData.append("title", newWorkTitle.value);
         newWorkFormData.append("category", newWorkCategory.value);
-        const reader = new FileReader();
-        reader.readAsBinaryString(newWorkImage.files[0])
-        reader.onloadend = () => {
-            newWorkFormData.append("image", reader.result);
+        newWorkFormData.append("image", newWorkImage.files[0]);
             fetch('http://localhost:5678/api/works', {
                 method: 'POST', 
                 headers: {
-                    'Authorization' : 'Bearer ' + getCookie('token')
+                    'Accept' : 'application/json',
+                    'Authorization' : 'Bearer ' + getCookie('token'),
                 },
                 body: newWorkFormData
             })
             .then((response) => {
-                console.log(response.status);
+                if(response.ok)
+                {return response.json();}
             })
-        }
+            .then ((data) => {
+                const newFigure = document.createElement('figure');
+                const newImage = document.createElement('img');
+                const newCaption = document.createElement('figcaption');
+                document.querySelector('.gallery').appendChild(newFigure);
+                newFigure.appendChild(newImage);
+                newFigure.appendChild(newCaption);
+                newFigure.dataset.id = data.categoryId;
+                newCaption.innerText = data.title;
+                newImage.setAttribute('src', data.imageUrl);
+                newImage.setAttribute('crossorigin', 'anonymous');
+                newImage.setAttribute('alt', data.title);
+            })
         /* emptyModal(); */
     })
 }
