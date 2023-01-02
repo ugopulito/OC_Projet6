@@ -5,6 +5,7 @@ function login(e){
     e.preventDefault();
     const username = document.getElementById('email');
     const password = document.getElementById('password');
+    let userError, serverError;
     const user = {
         "email" : username.value,
         "password" : password.value
@@ -39,7 +40,7 @@ function login(e){
             err.message = 'Erreur de connexion au serveur'
         }
         console.error(err.message);
-        createError(err, '#password', 'afterEnd');
+        createError(err.message, '#password', 'afterEnd');
     })
 }
     

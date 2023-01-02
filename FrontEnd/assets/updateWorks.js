@@ -37,41 +37,41 @@ function deleteWork() {
 }
 
 function addWork(){
-    //Validation du formulaire
-    /* document.getElementById('submit-work').addEventListener('input', function(){
-        if((newWorkImage.value != '') && (newWorkCategory.value != '') && (newWorkTitle.value != '')){
-            document.getElementById('submit-work-btn').removeAttribute('disabled')
-        }
-        else{
-            document.getElementById('submit-work-btn').setAttribute('disabled', '')
-        }
-    }) */
     //Preview de l'image téléchargée
     newWorkImage.addEventListener('change', function(){
         removeError('#submit-work .error');
         const imagePreview = newWorkImage.files;
         if (imagePreview[0]){
         document.querySelector('#new-work-image-preview').src = URL.createObjectURL(imagePreview[0]);
-        document.querySelector('#new-work-image-preview').style.display= 'block';
         document.querySelectorAll('.new-image :not(img)').forEach(item => {
             item.style.display = 'none';
         })
+        document.querySelector('#new-work-image-preview').style.display= 'block';
+        document.querySelector('#new-work-image').style.display= 'block';
         }
     })
     //Soumission du formulaire
-    document.querySelector('#submit-work-btn').addEventListener('click', function(){
-        if(newWorkImage.value != '')
-        {const newWork = {
-            "title": newWorkTitle.value,
-            "imageUrl": URL.createObjectURL(newWorkImage.files[0]),
-            "categoryId": newWorkCategory.value,
+    document.querySelector('#submit-work').addEventListener('submit', function(e){
+        e.preventDefault();
+        const newWorkFormData = new FormData();
+        newWorkFormData.append("title", newWorkTitle.value);
+        newWorkFormData.append("category", newWorkCategory.value);
+        const reader = new FileReader();
+        reader.readAsBinaryString(newWorkImage.files[0])
+        reader.onloadend = () => {
+            newWorkFormData.append("image", reader.result);
+            fetch('http://localhost:5678/api/works', {
+                method: 'POST', 
+                headers: {
+                    'Authorization' : 'Bearer ' + getCookie('token')
+                },
+                body: newWorkFormData
+            })
+            .then((response) => {
+                console.log(response.status);
+            })
         }
-        console.log(JSON.stringify(newWork));
-        emptyModal();}
-        else{
-            removeError('#submit-work .error');
-            createError('Vous devez ajouter une image', 'div.new-image', 'beforeEnd')
-        }
+        /* emptyModal(); */
     })
 }
 
@@ -87,14 +87,14 @@ function emptyModal(){
 }
 
 function initialisationModale(){
-    let catList = new Set();
     fetch('http://localhost:5678/api/works')
     .then((Response) => {
         return Response.json();
     })
     .then((data) => {
         //Création des miniatures
-        for (let item of data){
+        const nonuniqueCategories = [];
+        for (const item of data){
             const miniature = document.createElement('div');
             miniature.dataset.id = item.id;
             miniature.className = 'miniature';
@@ -110,13 +110,18 @@ function initialisationModale(){
             bin.className = 'delete-icon';
             miniature.appendChild(bin);
             //Ajout liste catégories
-            catList.add(item.category.id);
+            nonuniqueCategories.push({
+                'id' : item.category.id,
+                'name' : item.category.name
+            })
         }
-        console.log(catList);
-        for (let e of catList){
+        const uniqueCategories = nonuniqueCategories.filter((obj, index, self) => {
+            return index === self.findIndex(o => o.id === obj.id && o.name === obj.name);
+          });
+        for (const category of uniqueCategories){
             const option = document.createElement('option');
-            option.setAttribute('value', e);
-            option.innerText = e;
+            option.setAttribute('value', category.id);
+            option.innerText = category.name;
             document.querySelector('#new-work-category').appendChild(option)
         }
         deleteWork();

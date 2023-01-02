@@ -190,7 +190,8 @@ input[type="submit"]:active, .btn:active{
 	align-items: center;
 }
 .modale form input[type="file"] {
-    display: none;
+    opacity: 0;
+	position: absolute;
 }
 .modale form input, .modale form label, .modale form select{
 	box-sizing: border-box;

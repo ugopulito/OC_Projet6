@@ -36,20 +36,20 @@
 				<p class="title">Ajout photo</p>
 				<form id="submit-work">
 					<div class="new-image">
+						<input type="file" name="new-work-image" id="new-work-image" accept="image/png, image/jpeg" required>
 						<i class="image-icon"></i>
 						<label for="new-work-image">+ Ajouter photo</label>
 						<p>jpg, png : 4mo max</p>
 						<img id="new-work-image-preview" src="#" alt="prévisualisation de votre image" style="display: none;">
 					</div>
-					<input type="file" name="new-work-image" id="new-work-image" accept="image/png, image/jpeg" required>
 					<label for="new-work-title">Titre</label>
-					<input type="text" name="new-work-title" id="new-work-title" required>
+					<input type="text" name="new-work-title" id="new-work-title" autocomplete="off" required>
 					<label for="new-work-category">Catégorie</label>
 					<select id="new-work-category" required>
 						<option value=""></option>
 					</select>
 					<div class="breakline"></div>
-					<button type="submit"class="btn" id="submit-work-btn" >Valider</button>
+					<button type="submit"class="btn" id="submit-work-btn">Valider</button>
 				</form>
 			</div>
 		</div>
