@@ -1,4 +1,4 @@
-import {getCookie, displayEditBtns, displayLogout, displayTopBar, createError, removeError} from './functions.js';
+import {getCookie, displayEditBtns, displayLogout, displayTopBar, createError, removeError} from './utils.js';
 
 const newWorkImage = document.getElementById('new-work-image');
 const newWorkTitle = document.getElementById('new-work-title');
@@ -82,7 +82,7 @@ function addWork(){
                 newImage.setAttribute('crossorigin', 'anonymous');
                 newImage.setAttribute('alt', data.title);
             })
-        /* emptyModal(); */
+        emptyModal();
     })
 }
 
