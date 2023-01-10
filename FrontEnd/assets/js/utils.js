@@ -47,4 +47,6 @@ function removeError(target){
     }
 }
 
+
+
 export {displayTopBar, displayLogout, getCookie, displayEditBtns, removeError, createError};

@@ -11,7 +11,6 @@ function login(e){
         "password" : password.value
     }
     removeError('#submit-login .error');
-    /* console.log('Connexion avec le user :'+JSON.stringify(user)); */
     fetch('http://localhost:5678/api/users/login', {
         method: 'POST', 
         headers: {
@@ -36,13 +35,11 @@ function login(e){
         window.location.replace('index.html')
     })
     .catch((err) => {
-        if(err.message == 'Failed to fetch'){
-            err.message = 'Erreur de connexion au serveur'
-        }
         console.error(err.message);
+        removeError('#submit-login .error');
         createError(err.message, '#password', 'afterEnd');
     })
 }
     
-    document.querySelector('#submit-login').addEventListener('submit', login)
+    document.querySelector('#submit-login').addEventListener('submit', login);
     document.querySelector('#submit-login').addEventListener('input', function(){removeError('#submit-login .error')})

@@ -1,0 +1,52 @@
+/* Mode édition */
+.header-edit-mode{
+    margin-top: 100px;
+}
+.topbar {
+    width: 100%;
+    left: 0;
+    top: 0;
+    z-index: 100;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 0.5rem;
+    padding: 0.5rem 0;
+    background-color: #000000db;
+    color: white;
+    font-family: 'Work Sans';
+}
+.topbar button{
+	background-color: white;
+	border-radius: 2rem;
+	padding: .5rem 1rem;
+}
+.topbar button:hover{
+	background-color: lightgray;
+}
+.topbar p{
+	display: flex;
+}
+
+.edit-btn {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    position: absolute;
+}
+.intro-edit{
+    top: -2.5rem;
+}
+.hero-img-edit{
+	margin-top: .5rem;
+}
+.works-edit {
+    position: relative;
+}
+.section-title {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: baseline;
+}
