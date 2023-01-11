@@ -1,9 +1,10 @@
-import { createError, removeError, getCookie } from "./utils.js";
+import { createError, removeError, getCookie, createMiniatures } from "./utils.js";
 import { emptyModal } from "./modale.js";
 
 const newWorkImage = document.getElementById('new-work-image');
 const newWorkTitle = document.getElementById('new-work-title');
 const newWorkCategory = document.getElementById('new-work-category');
+let bins;
 
 function addWork(){
     //Preview de l'image téléchargée
@@ -40,17 +41,20 @@ function addWork(){
                 {return response.json();}
             })
             .then ((data) => {
+                //Ajout dans la galerie
                 const newFigure = document.createElement('figure');
                 const newImage = document.createElement('img');
                 const newCaption = document.createElement('figcaption');
                 document.querySelector('.gallery').appendChild(newFigure);
                 newFigure.appendChild(newImage);
                 newFigure.appendChild(newCaption);
-                newFigure.dataset.id = data.categoryId;
+                newFigure.dataset.id = data.id;
                 newCaption.innerText = data.title;
                 newImage.setAttribute('src', data.imageUrl);
                 newImage.setAttribute('crossorigin', 'anonymous');
                 newImage.setAttribute('alt', data.title);
+                createMiniatures(data);
+                deleteWork();
                 emptyModal();
             })
             .catch((error) => {
@@ -60,31 +64,30 @@ function addWork(){
 }
 
 function deleteWork() {
-    document.querySelectorAll('.delete-icon').forEach(bin => {bin.addEventListener('click', function(){
+    bins = document.querySelectorAll('.delete-icon');
+    bins.forEach(bin => {bin.addEventListener('click', function(){
         const idWorkToDelete = bin.parentNode.getAttribute('data-id');
         removeError('.delete-work .error');
-        if(confirm('Voulez-vous supprimer ce projet ?')){
-            bin.parentNode.style.display = 'none';
-            document.querySelector('.gallery [data-id="'+idWorkToDelete+'"]').style.display = 'none';
-            fetch('http://localhost:5678/api/works/' + idWorkToDelete, {
-            method: 'DELETE',
-            headers: {
-                'Authorization' : 'Bearer ' + getCookie('token')
+        bin.parentNode.style.display = 'none';
+        document.querySelector('.gallery [data-id="'+idWorkToDelete+'"]').style.display = 'none';
+        fetch('http://localhost:5678/api/works/' + idWorkToDelete, {
+        method: 'DELETE',
+        headers: {
+            'Authorization' : 'Bearer ' + getCookie('token')
+        }
+        })
+        .then((Response) => {
+            if(Response.ok){
+                bin.parentNode.remove();
+                document.querySelector('.gallery [data-id="'+idWorkToDelete+'"]').remove();
             }
-            })
-            .then((Response) => {
-                if(Response.ok){
-                    bin.parentNode.remove();
-                    document.querySelector('.gallery [data-id="'+idWorkToDelete+'"]').remove();
-                }
-            })
-            .catch((error) => {
-                bin.parentNode.removeAttribute('style');
-                    document.querySelector('.gallery [data-id="'+idWorkToDelete+'"]').removeAttribute('style');
-                    console.log(error);
-                    createError(error.message, '.delete-work', 'beforeEnd');
-            })
-        };
+        })
+        .catch((error) => {
+            bin.parentNode.removeAttribute('style');
+                document.querySelector('.gallery [data-id="'+idWorkToDelete+'"]').removeAttribute('style');
+                console.log(error);
+                createError(error.message, '.delete-work', 'beforeEnd');
+        })
     })});
 }
 

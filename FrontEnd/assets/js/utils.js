@@ -34,6 +34,23 @@ function displayEditBtns(){
     document.querySelector('#portfolio h2').insertAdjacentElement('afterend', worksEditBtn);
 }
 
+function createMiniatures(e){
+    const miniature = document.createElement('div');
+    miniature.dataset.id = e.id;
+    miniature.className = 'miniature';
+    document.querySelector('.miniatures').appendChild(miniature);
+    //Vignettes
+    const miniatureImage = document.createElement('img');
+    miniatureImage.setAttribute('src', e.imageUrl);
+    miniatureImage.setAttribute('crossorigin', 'anonymous');
+    miniatureImage.setAttribute('alt', e.title);
+    miniature.appendChild(miniatureImage);
+    //Corbeille
+    const bin = document.createElement('div');
+    bin.className = 'delete-icon';
+    miniature.appendChild(bin);
+}
+
 function createError(message, target, anchor){
     const error = document.createElement('div');
     error.classList.add('error');
@@ -49,4 +66,4 @@ function removeError(target){
 
 
 
-export {displayTopBar, displayLogout, getCookie, displayEditBtns, removeError, createError};
+export {displayTopBar, displayLogout, getCookie, displayEditBtns, removeError, createError, createMiniatures};

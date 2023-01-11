@@ -1,4 +1,5 @@
 import {deleteWork, newWorkCategory, newWorkImage, newWorkTitle} from './updateWorks.js';
+import { createMiniatures } from './utils.js';
 
 
 
@@ -22,20 +23,7 @@ function initialisationModale(){
         //Création des miniatures
         const nonuniqueCategories = [];
         for (const item of data){
-            const miniature = document.createElement('div');
-            miniature.dataset.id = item.id;
-            miniature.className = 'miniature';
-            document.querySelector('.miniatures').appendChild(miniature);
-            //Vignettes
-            const miniatureImage = document.createElement('img');
-            miniatureImage.setAttribute('src', item.imageUrl);
-            miniatureImage.setAttribute('crossorigin', 'anonymous');
-            miniatureImage.setAttribute('alt', item.title);
-            miniature.appendChild(miniatureImage);
-            //Corbeille
-            const bin = document.createElement('div');
-            bin.className = 'delete-icon';
-            miniature.appendChild(bin);
+            createMiniatures(item);
             //Ajout liste catégories
             nonuniqueCategories.push({
                 'id' : item.category.id,

@@ -16,6 +16,7 @@ if(getCookie('token')){
     displayEditBtns();
     displayTopBar();
     initialisationModale();
+    addWork();
     //Ouverture & Fermeture de la modale
     document.querySelector('#works-edit').addEventListener('click', function(){
         document.querySelector('#modale').removeAttribute('style');
@@ -40,5 +41,4 @@ if(getCookie('token')){
         document.querySelector('.add-work').style.display = 'none';
         document.querySelector('.delete-work').removeAttribute('style');
     })
-    addWork();
 }
