@@ -1,4 +1,4 @@
-import {deleteWork, newWorkCategory, newWorkImage, newWorkTitle} from './updateWorks.js';
+import {initBins, newWorkCategory, newWorkImage, newWorkTitle} from './updateWorks.js';
 import { createMiniatures } from './utils.js';
 
 
@@ -39,7 +39,7 @@ function initialisationModale(){
             option.innerText = category.name;
             document.querySelector('#new-work-category').appendChild(option)
         }
-        deleteWork();
+        initBins();
     })
 }
 

@@ -4,7 +4,6 @@ import { emptyModal } from "./modale.js";
 const newWorkImage = document.getElementById('new-work-image');
 const newWorkTitle = document.getElementById('new-work-title');
 const newWorkCategory = document.getElementById('new-work-category');
-let bins;
 
 function addWork(){
     //Preview de l'image téléchargée
@@ -53,8 +52,11 @@ function addWork(){
                 newImage.setAttribute('src', data.imageUrl);
                 newImage.setAttribute('crossorigin', 'anonymous');
                 newImage.setAttribute('alt', data.title);
-                createMiniatures(data);
-                deleteWork();
+                //Création de la miniature dans la modale
+                const newBin = createMiniatures(data);
+                newBin.addEventListener('click', function(){
+                    deleteWork(newBin)
+                })
                 emptyModal();
             })
             .catch((error) => {
@@ -63,32 +65,37 @@ function addWork(){
     })
 }
 
-function deleteWork() {
-    bins = document.querySelectorAll('.delete-icon');
+function initBins(){
+    const bins = document.querySelectorAll('.delete-icon');
     bins.forEach(bin => {bin.addEventListener('click', function(){
-        const idWorkToDelete = bin.parentNode.getAttribute('data-id');
+        deleteWork(bin);
+    })});
+}
+
+function deleteWork(e) {
+        const idWorkToDelete = e.parentNode.getAttribute('data-id');
         removeError('.delete-work .error');
-        bin.parentNode.style.display = 'none';
+        e.parentNode.style.display = 'none';
         document.querySelector('.gallery [data-id="'+idWorkToDelete+'"]').style.display = 'none';
         fetch('http://localhost:5678/api/works/' + idWorkToDelete, {
-        method: 'DELETE',
-        headers: {
-            'Authorization' : 'Bearer ' + getCookie('token')
-        }
+            method: 'DELETE',
+            headers: {
+                'Authorization' : 'Bearer ' + getCookie('token')
+            }
         })
         .then((Response) => {
             if(Response.ok){
-                bin.parentNode.remove();
+                e.parentNode.remove();
                 document.querySelector('.gallery [data-id="'+idWorkToDelete+'"]').remove();
             }
         })
         .catch((error) => {
-            bin.parentNode.removeAttribute('style');
-                document.querySelector('.gallery [data-id="'+idWorkToDelete+'"]').removeAttribute('style');
-                console.log(error);
-                createError(error.message, '.delete-work', 'beforeEnd');
+            e.parentNode.removeAttribute('style');
+            document.querySelector('.gallery [data-id="'+idWorkToDelete+'"]').removeAttribute('style');
+            console.log(error);
+            createError(error.message, '.delete-work', 'beforeEnd');
         })
-    })});
+
 }
 
-export {addWork, deleteWork, newWorkTitle, newWorkImage, newWorkCategory}
+export {addWork, deleteWork, initBins, newWorkTitle, newWorkImage, newWorkCategory}

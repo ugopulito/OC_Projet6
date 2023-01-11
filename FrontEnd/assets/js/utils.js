@@ -49,6 +49,7 @@ function createMiniatures(e){
     const bin = document.createElement('div');
     bin.className = 'delete-icon';
     miniature.appendChild(bin);
+    return bin
 }
 
 function createError(message, target, anchor){
