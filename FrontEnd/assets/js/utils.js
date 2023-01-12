@@ -52,6 +52,13 @@ function createMiniatures(e){
     return bin
 }
 
+function initBins(){
+    const bins = document.querySelectorAll('.delete-icon');
+    bins.forEach(bin => {bin.addEventListener('click', function(){
+        deleteWork(bin);
+    })});
+}
+
 function createError(message, target, anchor){
     const error = document.createElement('div');
     error.classList.add('error');
@@ -65,6 +72,27 @@ function removeError(target){
     }
 }
 
+function addToGallery(e){
+    const figure = document.createElement('figure');
+    const image = document.createElement('img');
+    const caption = document.createElement('figcaption');
+    const gallery = document.querySelector('.gallery');
+    gallery.appendChild(figure);
+    figure.appendChild(image);
+    figure.appendChild(caption);
+    try{
+        figure.dataset.category = e.category.name;
+    }
+    catch (error) {
+        console.log(error + ' >> Le nom de la catégorie n\'est pas disponible pour le moment.');
+    }
+    figure.dataset.id = e.id;
+    caption.innerText = e.title;
+    image.setAttribute('src', e.imageUrl);
+    image.setAttribute('crossorigin', 'anonymous');
+    image.setAttribute('alt', e.title);
+}
 
 
-export {displayTopBar, displayLogout, getCookie, displayEditBtns, removeError, createError, createMiniatures};
+
+export {displayTopBar, displayLogout, getCookie, displayEditBtns, removeError, createError, createMiniatures, initBins, addToGallery};

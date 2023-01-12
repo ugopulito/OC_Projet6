@@ -1,5 +1,5 @@
-import {initBins, newWorkCategory, newWorkImage, newWorkTitle} from './updateWorks.js';
-import { createMiniatures } from './utils.js';
+import {newWorkCategory, newWorkImage, newWorkTitle} from './updateWorks.js';
+import { createMiniatures, initBins } from './utils.js';
 
 
 
@@ -14,15 +14,15 @@ function emptyModal(){
     })
 }
 
-function initialisationModale(){
+function initModal(){
     fetch('http://localhost:5678/api/works')
     .then((Response) => {
         return Response.json();
     })
     .then((data) => {
-        //Création des miniatures
         const nonuniqueCategories = [];
         for (const item of data){
+            //Création des miniatures
             createMiniatures(item);
             //Ajout liste catégories
             nonuniqueCategories.push({
@@ -43,4 +43,4 @@ function initialisationModale(){
     })
 }
 
-export {initialisationModale, emptyModal}
+export {initModal, emptyModal}

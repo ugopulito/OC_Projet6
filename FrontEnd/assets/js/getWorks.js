@@ -1,5 +1,6 @@
-let filters, figure, figures, image, caption, activeFilter, button;
-const gallery = document.querySelector('.gallery');
+import { addToGallery } from "./utils.js";
+
+let filters, figures, activeFilter, button;
 const filtersList = document.querySelector('.filters');
 const categories = new Set();
 
@@ -26,6 +27,7 @@ function filterProjects(){
         }
     }
 }
+
 fetch('http://localhost:5678/api/works')
     .then((Response) => {
         return Response.json();
@@ -33,18 +35,7 @@ fetch('http://localhost:5678/api/works')
     .then((data) => {
         //Création de la galerie
         for (let item of data){
-            figure = document.createElement('figure');
-            image = document.createElement('img');
-            caption = document.createElement('figcaption');
-            gallery.appendChild(figure);
-            figure.appendChild(image);
-            figure.appendChild(caption);
-            figure.dataset.category = item.category.name;
-            figure.dataset.id = item.id;
-            caption.innerText = item.title;
-            image.setAttribute('src', item.imageUrl);
-            image.setAttribute('crossorigin', 'anonymous');
-            image.setAttribute('alt', item.title);
+            addToGallery(item);
         }
         //Création des filtres
         for (let item of data){

@@ -1,23 +1,27 @@
-import { createError, removeError, getCookie, createMiniatures } from "./utils.js";
+import { createError, removeError, getCookie, createMiniatures, addToGallery } from "./utils.js";
 import { emptyModal } from "./modale.js";
 
 const newWorkImage = document.getElementById('new-work-image');
 const newWorkTitle = document.getElementById('new-work-title');
 const newWorkCategory = document.getElementById('new-work-category');
 
-function addWork(){
+function previewUploaded(){
+    removeError('#submit-work .error');
+    const imagePreview = newWorkImage.files;
+    if (imagePreview[0]){
+    document.querySelector('#new-work-image-preview').src = URL.createObjectURL(imagePreview[0]);
+    document.querySelectorAll('.new-image :not(img)').forEach(item => {
+        item.style.display = 'none';
+    })
+    document.querySelector('#new-work-image-preview').style.display= 'block';
+    document.querySelector('#new-work-image').style.display= 'block';
+    }
+}
+
+function manageNewWork(){
     //Preview de l'image téléchargée
     newWorkImage.addEventListener('change', function(){
-        removeError('#submit-work .error');
-        const imagePreview = newWorkImage.files;
-        if (imagePreview[0]){
-        document.querySelector('#new-work-image-preview').src = URL.createObjectURL(imagePreview[0]);
-        document.querySelectorAll('.new-image :not(img)').forEach(item => {
-            item.style.display = 'none';
-        })
-        document.querySelector('#new-work-image-preview').style.display= 'block';
-        document.querySelector('#new-work-image').style.display= 'block';
-        }
+        previewUploaded();
     })
     //Soumission du formulaire
     document.querySelector('#submit-work').addEventListener('submit', function(e){
@@ -40,23 +44,14 @@ function addWork(){
                 {return response.json();}
             })
             .then ((data) => {
-                //Ajout dans la galerie
-                const newFigure = document.createElement('figure');
-                const newImage = document.createElement('img');
-                const newCaption = document.createElement('figcaption');
-                document.querySelector('.gallery').appendChild(newFigure);
-                newFigure.appendChild(newImage);
-                newFigure.appendChild(newCaption);
-                newFigure.dataset.id = data.id;
-                newCaption.innerText = data.title;
-                newImage.setAttribute('src', data.imageUrl);
-                newImage.setAttribute('crossorigin', 'anonymous');
-                newImage.setAttribute('alt', data.title);
-                //Création de la miniature dans la modale
+                //Ajout dans la galerie des projets
+                addToGallery(data);
+                //Ajout de la miniature dans la modale
                 const newBin = createMiniatures(data);
                 newBin.addEventListener('click', function(){
                     deleteWork(newBin)
                 })
+                //Vidage de la modale
                 emptyModal();
             })
             .catch((error) => {
@@ -65,12 +60,7 @@ function addWork(){
     })
 }
 
-function initBins(){
-    const bins = document.querySelectorAll('.delete-icon');
-    bins.forEach(bin => {bin.addEventListener('click', function(){
-        deleteWork(bin);
-    })});
-}
+
 
 function deleteWork(e) {
         const idWorkToDelete = e.parentNode.getAttribute('data-id');
@@ -98,4 +88,4 @@ function deleteWork(e) {
 
 }
 
-export {addWork, deleteWork, initBins, newWorkTitle, newWorkImage, newWorkCategory}
+export {manageNewWork, deleteWork, newWorkTitle, newWorkImage, newWorkCategory}
