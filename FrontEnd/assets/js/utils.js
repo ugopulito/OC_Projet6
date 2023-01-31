@@ -1,3 +1,5 @@
+import { deleteWork } from "./updateWorks.js";
+
 function displayTopBar(){
     document.querySelector('.topbar').removeAttribute('style');
     document.querySelector('header').classList.add('header-edit-mode')
